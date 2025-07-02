@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Armería WoW – Login / Registro</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel&family=Open+Sans&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- VIDEO HEADER (25vh) -->
+  <div class="video-header">
+    <iframe
+      id="ytPlayer"
+      class="bg-video"
+      src="https://www.youtube.com/embed/A2KRoI9bics?autoplay=1&mute=1&loop=1&playlist=A2KRoI9bics&controls=0&modestbranding=1&enablejsapi=1"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+    ></iframe>
+    <button id="soundBtn" class="sound-btn">🔊 Activar sonido</button>
+  </div>
+    <!-- Imagen animada WoW -->
+<div class="hover-card">
+  <img src="imagenes/imagen_gif.png" alt="Arte WoW" />
+</div>
+  <!-- AUTH CONTAINER (75vh) -->
+  <div class="auth-container">
+    <!-- LOGIN BOX -->
+    <div class="form-box">
+      <h2>Iniciar Sesión</h2>
+      <form id="loginForm">
+        <input type="text" id="loginUser" placeholder="Usuario" required />
+        <input type="password" id="loginPass" placeholder="Contraseña" required />
+        <button type="submit" class="action-btn">Entrar</button>
+      </form>
+      <p id="loginMessage" class="message-area"></p>
+    </div>
+    <!-- REGISTER BOX -->
+    <div class="form-box">
+      <h2>Registrarse</h2>
+      <form id="registerForm">
+        <input type="text" id="registerUser" placeholder="Usuario" required />
+        <input type="password" id="registerPass" placeholder="Contraseña" required />
+        <input type="text" id="registerCharName" placeholder="Nombre de Personaje" required />
+        <select id="registerRealm" required>
+          <option value="">Elige Reino</option>
+          <option value="Ragnarok">Ragnarok</option>
+          <option value="Drakari">Drakari</option>
+          <option value="Shatra">Shatra</option>
+        </select>
+        <select id="registerRace" required>
+          <option value="">Elige Raza</option>
+          <optgroup label="Horda">
+            <option value="Orco">Orco</option>
+            <option value="Troll">Troll</option>
+            <option value="No-muerto">No-muerto</option>
+            <option value="Elfo de sangre">Elfo de sangre</option>
+            <option value="Goblin">Goblin</option>
+            <option value="Panda">Panda</option>
+          </optgroup>
+          <optgroup label="Alianza">
+            <option value="Humano">Humano</option>
+            <option value="Elfo de la noche">Elfo de la noche</option>
+            <option value="Enano">Enano</option>
+            <option value="Gnomo">Gnomo</option>
+            <option value="Panda">Panda</option>
+            <option value="Dranei">Dranei</option>
+          </optgroup>
+        </select>
+        <select id="registerClass" required>
+          <option value="">Elige Clase</option>
+          <option value="Cazador">Cazador</option>
+          <option value="Cazador de demonio">Cazador de demonio</option>
+          <option value="Paladín">Paladín</option>
+          <option value="Guerrero">Guerrero</option>
+          <option value="Pícaro">Pícaro</option>
+          <option value="Sacerdote">Sacerdote</option>
+          <option value="Mago">Mago</option>
+          <option value="Brujo">Brujo</option>
+          <option value="Monje">Monje</option>
+        </select>
+        <button type="submit" class="action-btn">Registrarse</button>
+      </form>
+      <p id="registerMessage" class="message-area"></p>
+    </div>
+  </div>
+
+  <!-- YouTube IFrame API + Toggle Mute/Unmute -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    let player, isMuted = true;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('ytPlayer', {
+        events: { onReady: e => e.target.mute() }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('soundBtn');
+      btn.onclick = function() {
+        if (!player) return;
+        if (isMuted) {
+          player.unMute();
+          this.textContent = '🔇 Desactivar sonido';
+        } else {
+          player.mute();
+          this.textContent = '🔊 Activar sonido';
+        }
+        isMuted = !isMuted;
+      };
+    });
+  </script>
+
+  <!-- Lógica de Login/Registro -->
+  <script src="login.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Armería WoW – Perfil</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel&family=Open+Sans&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- VIDEO HEADER (25vh) -->
+  <div class="video-header">
+    <iframe
+      id="ytPlayer"
+      class="bg-video"
+      src="https://www.youtube.com/embed/NJMgpmY9MOU?start=11&autoplay=1&mute=1&loop=1&playlist=NJMgpmY9MOU&controls=0&modestbranding=1&enablejsapi=1"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+    ></iframe>
+    <button id="soundBtn" class="sound-btn">🔊 Activar sonido</button>
+  </div>
+
+  <!-- PROFILE HERO (75vh) -->
+  <div class="profile-hero">
+    <!-- SIDEBAR -->
+    <aside class="profile-sidebar">
+      <img src="imagenes/cazador_bestia.png" class="icono" alt="Avatar" />
+      <h2 id="tituloJugador"></h2>
+      <ul class="basic-info">
+        <li><strong>Nivel:</strong> <span id="level">45</span></li>
+        <li><strong>Clase:</strong> <span id="charClass"></span></li>
+        <li><strong>Reino:</strong> <span id="realm"></span></li>
+        <li><strong>Hermandad:</strong> <span id="guild">GuardiaÉpica</span></li>
+        <li><strong>Último login:</strong> <span id="lastLogin">Hoy, 14:32</span></li>
+      </ul>
+      <button class="action-btn logout" onclick="cerrarSesion()">Cerrar sesión</button>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <section class="profile-main">
+      <div class="gallery">
+        <button id="prev">&lt;</button>
+        <img id="slide" src="imagenes/Arte_wow.png" alt="Arte WoW" />
+        <button id="next">&gt;</button>
+      </div>
+      <div class="profile-stats">
+        <button onclick="toggleStats()" class="action-btn small">
+          Mostrar/Ocultar estadísticas
+        </button>
+        <div id="statsExtras" class="extra-stats">
+          <p>Fuerza: 120</p>
+          <p>Resistencia: 85</p>
+          <p>Habilidad: 93</p>
+          <p>Agilidad: 78</p>
+          <p>Inteligencia: 64</p>
+          <p>Tiempo Jugado: 152h</p>
+        </div>
+      </section>
+    </div>
+
+  <!-- YouTube IFrame API + Toggle -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    let player, isMuted = true;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('ytPlayer', {
+        events: { onReady: e => e.target.mute() }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('soundBtn');
+      btn.onclick = function() {
+        if (!player) return;
+        if (isMuted) {
+          player.unMute();
+          this.textContent = '🔇 Desactivar sonido';
+        } else {
+          player.mute();
+          this.textContent = '🔊 Activar sonido';
+        }
+        isMuted = !isMuted;
+      };
+    });
+  </script>
+
+  <!-- Lógica de Perfil + Slider -->
+  <script src="profile.js"></script>
+</body>
+</html>
