@@ -3,10 +3,25 @@ const usuario = JSON.parse(localStorage.getItem("loggedUser"));
 if (!usuario) {
   window.location.href = "index.html";
 } else {
-  document.getElementById("tituloJugador").textContent =
-    `${usuario.characterName} – ${usuario.realm}`;
-  document.getElementById("charClass").textContent  = usuario.charClass;
-  document.getElementById("realm").textContent      = usuario.realm;
+  document.getElementById("tituloJugador").textContent = `${usuario.characterName} – ${usuario.realm}`;
+  document.getElementById("charClass").textContent = usuario.charClass;
+  document.getElementById("realm").textContent = usuario.realm;
+  document.getElementById("guild").textContent = usuario.guild || "Sin hermandad";
+  document.getElementById("lastLogin").textContent = usuario.lastLogin || "Sin registro";
+
+  // Inyectar atributos en #statsExtras
+  const statsContainer = document.getElementById("statsExtras");
+  statsContainer.innerHTML = `
+    <p>Fuerza: ${usuario.atributos.fuerza}</p>
+    <p>Vitalidad: ${usuario.atributos.vitalidad}</p>
+    <p>Agilidad: ${usuario.atributos.agilidad}</p>
+    <p>Inteligencia: ${usuario.atributos.inteligencia}</p>
+    <p>Tiempo Jugado: ${aleatorio(50, 200)}h</p>
+  `;
+}
+
+function aleatorio(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // Toggle estadísticas
@@ -37,19 +52,14 @@ document.getElementById("next").onclick = () => showSlide(idx + 1);
 
 function showSlide(i) {
   idx = (i + slides.length) % slides.length;
-
-  // Aplica clase para fade-out
   slideImg.classList.add("fade-out");
 
-  // Espera a que se desvanezca antes de cambiar la imagen
   setTimeout(() => {
     slideImg.src = encodeURI(slides[idx]);
-
-    // Remueve fade-out y restaura visibilidad con nueva imagen
     slideImg.classList.remove("fade-out");
-  }, 500); // Debe coincidir con transition del CSS
+  }, 500);
 }
 showSlide(0);
 setInterval(() => {
-  showSlide(idx + 1); // Avanza al siguiente slide cada 4 segundos
+  showSlide(idx + 1);
 }, 4000);
